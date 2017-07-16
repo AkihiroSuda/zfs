@@ -19,7 +19,14 @@ Please refer to [`Makefile`](./Makefile) for the version known to work with.
 
 ## Install (static link to the daemon)
 
-Put [`plugin.go`](plugin.go) to `$GOPATH/github.com/containerd/containerd/cmd/containerd/builtins_zfs.go`, and build the daemon manually:
+Create `$GOPATH/src/github.com/containerd/containerd/cmd/containerd/builtins_zfs.go` with the following content, and build the daemon manually:
+```go
+// +build linux freebsd solaris
+
+package main
+
+import _ "github.com/AkihiroSuda/containerd-zfs"
+```
 
 
 ## Usage

@@ -1,6 +1,6 @@
 // +build linux freebsd solaris
 
-package zfs
+package main
 
 import (
 	"context"

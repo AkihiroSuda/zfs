@@ -9,17 +9,17 @@ ONI = "👹"
 
 all: $(BINARIES)
 
-zfs.so:
+zfs.so: zfs.go
 	@test -n "$(CONTAINERD_COMMIT)" || (echo "$(ONI) Please checkout github.com/containerd/containerd $(EXPECTED_CONTAINERD_COMMIT) under GOPATH."; false)
 	@test "$(CONTAINERD_COMMIT)" = "$(EXPECTED_CONTAINERD_COMMIT)" || (echo "$(ONI) WARNING: expected github.com/containerd/containerd to be $(EXPECTED_CONTAINERD_COMMIT), got $(CONTAINERD_COMMIT)" )
 	@echo "$(Z) Building $@ against containerd $(CONTAINERD_COMMIT)."
-	go build -buildmode=plugin -o $@ plugin.go
+	go build -buildmode=plugin -o $@ $<
 
 echo-expected-containerd-commit:
 	@echo $(EXPECTED_CONTAINERD_COMMIT)
 
-zfs.test:
-	go test -c ./snapshot/zfs
+zfs.test: zfs_test.go zfs.go
+	go test -o $@ -c $^
 
 test: zfs.test
 	./$< -test.v -test.root

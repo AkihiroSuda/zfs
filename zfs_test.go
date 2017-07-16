@@ -1,6 +1,6 @@
 // +build linux
 
-package zfs
+package main
 
 import (
 	"context"
